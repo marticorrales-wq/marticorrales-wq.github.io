@@ -370,6 +370,7 @@
 </style>
 </head>
 <body>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1797101481416215&ev=PageView&noscript=1" alt=""></noscript>
   <div class="mobile-action-bar" aria-label="Acciones rápidas de inscripción">
     <a class="mobile-enroll" href="#inscripcion">Inscribirme</a>
     <a class="mobile-wa" id="mobileWhatsapp" target="_blank" rel="noopener">WhatsApp</a>
@@ -653,7 +654,7 @@ window.ARTECLUB_CONFIG = {
     whatsappUrl: 'https://wa.me/50494657165?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER.',
 
   // Analítica opcional. Déjalos vacíos hasta crear las cuentas/IDs.
-  metaPixelId: '',
+  metaPixelId: '1797101481416215',
   gaMeasurementId: ''
 };
 
@@ -691,8 +692,17 @@ window.ARTECLUB_CONFIG = {
       });
     }
   }
+  let hiperrealismoViewTracked = false;
   hiperrealismoToggle?.addEventListener('click', () => {
-    setHiperrealismoDetail(hiperrealismoSection?.hidden ?? true);
+    const willOpen = hiperrealismoSection?.hidden ?? true;
+    setHiperrealismoDetail(willOpen);
+    if(willOpen && !hiperrealismoViewTracked){
+      hiperrealismoViewTracked = true;
+      trackMetaStandard('ViewContent',{
+        content_name:'Taller de Retrato Hiperrealista',
+        content_category:'Taller presencial'
+      });
+    }
   });
   // Incluso si el archivo se abre con #hiperrealismo, el detalle no se despliega automáticamente.
   // El enlace del menú “Hiperrealismo” lleva primero a la tarjeta del taller.
@@ -823,6 +833,11 @@ window.ARTECLUB_CONFIG = {
     try{ if(window.gtag) window.gtag('event', eventName, params); }catch(e){}
   }
 
+  // Eventos estándar de Meta para medir el recorrido comercial.
+  function trackMetaStandard(eventName, params={}){
+    try{ if(window.fbq) window.fbq('track', eventName, params); }catch(e){}
+  }
+
   async function loadAvailability(){
     if(!BACKEND_URL) return;
     try{
@@ -883,6 +898,10 @@ window.ARTECLUB_CONFIG = {
       const data=await apiPost(payload);
       status.className='status ok'; status.textContent='¡Gracias! Registramos tu interés y te avisaremos cuando se abran las inscripciones.';
       track('InterestRegistered',{course:payload.course});
+      trackMetaStandard('Lead',{
+        content_name:payload.course,
+        lead_type:'future_workshop_interest'
+      });
       e.target.reset();
       setTimeout(closeModal,1500);
     } catch(err){
@@ -923,6 +942,12 @@ window.ARTECLUB_CONFIG = {
       status.className='status ok';
       status.innerHTML=`<strong>¡Recibimos tu solicitud!</strong> Código: ${data.registrationId || 'registrado'}. Tu cupo quedará confirmado una vez validemos la transferencia. Recibirás la confirmación por WhatsApp.`;
       track('RegistrationSubmitted',{schedule:payload.schedule, gift:payload.gift, senior:payload.seniorDiscount, value:payload.price});
+      trackMetaStandard('Lead',{
+        content_name:'Taller de Retrato Hiperrealista',
+        lead_type:'registration_request',
+        value:payload.price,
+        currency:'HNL'
+      });
       e.target.reset(); seniorMain.checked=false; giftMain.checked=false; updatePrice(); updateGift();
       loadAvailability();
     } catch(err){
@@ -975,6 +1000,25 @@ window.ARTECLUB_CONFIG = {
 
   whatsappEnroll?.addEventListener('click',()=>track('WhatsAppClick',{placement:'inscription'}));
   $('#mobileWhatsapp')?.addEventListener('click',()=>track('WhatsAppClick',{placement:'mobile_bar'}));
+
+  // Contact estándar de Meta en cualquier salida hacia WhatsApp.
+  document.addEventListener('click', e => {
+    const link = e.target.closest?.('a');
+    if(!link) return;
+    const href = link.getAttribute('href') || '';
+    if(!href.includes('wa.me/')) return;
+    let placement='whatsapp';
+    if(link.id==='whatsappEnroll') placement='inscription';
+    else if(link.id==='mobileWhatsapp') placement='mobile_bar';
+    else if(link.id==='contactWhatsappLink') placement='contact_social';
+    else if(link.id==='whatsappLink') placement='footer';
+    else if(link.closest('#contacto')) placement='contact_section';
+    trackMetaStandard('Contact',{
+      content_name:'ARTE CLUB Taller',
+      contact_method:'WhatsApp',
+      placement
+    });
+  });
   $$('.interest-btn').forEach(btn=>btn.addEventListener('click',()=>track('InterestOpen',{course:btn.dataset.course||''})));
   loadAvailability();
 </script>
