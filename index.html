@@ -371,9 +371,9 @@
 </head>
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1797101481416215&ev=PageView&noscript=1" alt=""></noscript>
-  <div class="mobile-action-bar" aria-label="Acciones rápidas de inscripción">
+  <div class="mobile-action-bar" aria-label="Acciones rápidas">
     <a class="mobile-enroll" href="#inscripcion">Inscribirme</a>
-    <a class="mobile-wa" id="mobileWhatsapp" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="mobile-wa" id="mobileWhatsapp" href="https://wa.me/50492549176?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER." target="_blank" rel="noopener">Contáctanos</a>
   </div>
 
   <header class="topbar">
@@ -546,11 +546,10 @@
               <div class="bank-row"><span class="bank-label"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M4 21c.7-4.5 3.4-7 8-7s7.3 2.5 8 7"></path></svg> Titular</span><strong>Marvin Martínez Corrales</strong></div>
               <div class="bank-row"><span class="bank-label"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-7 7L3 12Z"></path><circle cx="8" cy="8" r="1.4"></circle></svg> Número de cuenta</span><div class="account-wrap"><span class="account-number" id="accountNumber">3201342122</span><button class="btn secondary small" type="button" id="copyAccount">Copiar</button></div></div>
             </div>
-            <div class="notice">Después de transferir, envía tu comprobante por WhatsApp o adjúntalo en el formulario web. No necesitas hacer ambas cosas.</div>
+            <div class="notice">Después de transferir, adjunta tu comprobante en el formulario de inscripción.</div>
             </div>
             <div class="action-stack">
-              <a class="btn" id="whatsappEnroll" target="_blank" rel="noopener">Inscribirme por WhatsApp</a>
-              <a class="btn secondary" href="#webForm">Usar formulario web</a>
+              <a class="btn" href="#webForm">Continuar con la inscripción</a>
             </div>
           </div>
 
@@ -598,9 +597,7 @@
       <div class="container contact-grid">
         <div>
           <div class="eyebrow">Contacto</div>
-          <h2>¿Tienes una pregunta antes de inscribirte?</h2>
-          <p class="lead">Escríbenos directamente. También puedes dejar tu interés en los próximos talleres para que te avisemos cuando tengan fecha.</p>
-          <a class="btn" href="https://wa.me/50492549176?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER." target="_blank" rel="noopener">WhatsApp 9254-9176</a>
+          <a class="btn" href="https://wa.me/50492549176?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER." target="_blank" rel="noopener">Contáctanos</a>
           <div class="contact-social hidden" id="contactSocialLinks" aria-label="Redes sociales">
             <a id="contactFacebookLink" target="_blank" rel="noopener noreferrer" aria-label="ARTE CLUB Taller en Facebook">
               <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-9h3l.45-3.5H13.5V7.25c0-1.01.28-1.7 1.73-1.7H17V2.42c-.31-.04-1.37-.13-2.61-.13-2.58 0-4.35 1.58-4.35 4.48V9.5H7.12V13h2.92v9h3.46Z"/></svg>
@@ -712,7 +709,6 @@ window.ARTECLUB_CONFIG = {
   const giftMain = $('#giftMain');
   const discountLine = $('#discountLine');
   const priceTotal = $('#priceTotal');
-  const whatsappEnroll = $('#whatsappEnroll');
   const formSchedule = $('#formSchedule');
   const seniorForm = $('#seniorForm');
   const giftForm = $('#giftForm');
@@ -744,22 +740,6 @@ window.ARTECLUB_CONFIG = {
   }
   function updateWhatsApp(){
     const schedule = selectedSchedule();
-    const selectedRadio = $('input[name="mainSchedule"]:checked');
-    const waitlist = selectedRadio?.dataset.full === '1';
-    const senior = seniorMain.checked;
-    const isGift = giftMain.checked;
-    const msg = [
-      isGift ? 'Hola, quiero comprar como regalo el Taller Intensivo de Retrato Hiperrealista de ARTE CLUB TALLER del 24 de octubre de 2026.' : 'Hola, quiero inscribirme en el Taller Intensivo de Retrato Hiperrealista de ARTE CLUB TALLER del 24 de octubre de 2026.',
-      `Jornada seleccionada: ${schedule}${waitlist ? ' (lista de espera)' : ''}.`,
-      waitlist ? 'Veo que los 10 cupos confirmados están completos. Deseo unirme a la lista de espera y esperar confirmación antes de realizar cualquier pago.' : `Monto a transferir: ${senior ? 'L 1,043 (30% tercera edad sobre precio de oferta)' : 'L 1,490 (precio de oferta)'}.`,
-      isGift ? 'Nombre de quien compra / regala: __________.' : 'Mi nombre es: __________.',
-      isGift ? 'Nombre de la persona que asistirá: __________.' : '',
-      waitlist ? 'Por favor avísenme si se libera un cupo.' : 'Deseo completar la inscripción y enviar el comprobante de transferencia.'
-    ].filter(Boolean).join('\n');
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    whatsappEnroll.href = waUrl;
-    const mobileWhatsapp = $('#mobileWhatsapp');
-    if(mobileWhatsapp) mobileWhatsapp.href = waUrl;
     formSchedule.value = schedule;
   }
   seniorMain.addEventListener('change', updatePrice);
@@ -1022,7 +1002,6 @@ window.ARTECLUB_CONFIG = {
     window.dataLayer=window.dataLayer||[]; window.gtag=function(){dataLayer.push(arguments)}; gtag('js',new Date()); gtag('config',CONFIG.gaMeasurementId);
   }
 
-  whatsappEnroll?.addEventListener('click',()=>track('WhatsAppClick',{placement:'inscription'}));
   $('#mobileWhatsapp')?.addEventListener('click',()=>track('WhatsAppClick',{placement:'mobile_bar'}));
 
   // Contact estándar de Meta en cualquier salida hacia WhatsApp.
@@ -1032,8 +1011,7 @@ window.ARTECLUB_CONFIG = {
     const href = link.getAttribute('href') || '';
     if(!href.includes('wa.me/')) return;
     let placement='whatsapp';
-    if(link.id==='whatsappEnroll') placement='inscription';
-    else if(link.id==='mobileWhatsapp') placement='mobile_bar';
+    if(link.id==='mobileWhatsapp') placement='mobile_bar';
     else if(link.id==='contactWhatsappLink') placement='contact_social';
     else if(link.id==='whatsappLink') placement='footer';
     else if(link.closest('#contacto')) placement='contact_section';
