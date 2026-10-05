@@ -159,6 +159,9 @@
     .account-wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
     .account-number{font-size:1.22rem;color:var(--gold-2);font-weight:900;letter-spacing:.04em}
     .action-stack{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    /* Ajustes visuales v12.6: CTA de inscripción y contacto */
+    .action-stack.registration-action{display:flex;justify-content:center;align-items:center;margin-top:24px}
+    .registration-continue{width:min(100%,460px);white-space:nowrap;text-align:center;justify-content:center;padding:15px 30px;font-size:1.05rem}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .field{display:grid;gap:7px}
     .field.full{grid-column:1/-1}
@@ -177,6 +180,8 @@
     summary{cursor:pointer;padding:16px 0;color:var(--gold-2);font-weight:800}
     details p{padding-bottom:16px;color:#e0dbd1}
     .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+    .contact-eyebrow{margin-bottom:18px}
+    .contact-primary{margin-top:0}
     .contact-card{padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--slate)}
     .contact-social{margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
     .contact-social a{display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border-radius:999px;border:1px solid rgba(173,137,86,.5);color:var(--gold-2);text-decoration:none;font-weight:800;background:rgba(255,255,255,.03)}
@@ -281,6 +286,8 @@
       .account-number{font-size:1.12rem}
       .notice{font-size:.9rem}
       .action-stack .btn{min-height:50px}
+      .action-stack.registration-action{display:flex;justify-content:center}
+      .registration-continue{width:min(100%,460px);white-space:nowrap;padding-left:18px;padding-right:18px;font-size:1rem}
       .field input,.field select,.field textarea{min-height:48px;font-size:16px}
       .field input[type=file]{padding:10px}
 
@@ -303,6 +310,7 @@
       .course-body p{-webkit-line-clamp:3}
     }
     @media (max-width:350px){
+      .registration-continue{white-space:normal;line-height:1.2}
       .course-card{grid-template-columns:1fr}
       .course-card img{height:210px}
       .mobile-action-bar{grid-template-columns:1fr}
@@ -548,8 +556,8 @@
             </div>
             <div class="notice">Después de transferir, adjunta tu comprobante en el formulario de inscripción.</div>
             </div>
-            <div class="action-stack">
-              <a class="btn" href="#webForm">Continuar con la inscripción</a>
+            <div class="action-stack registration-action">
+              <a class="btn registration-continue" href="#webForm">Continuar con la inscripción</a>
             </div>
           </div>
 
@@ -596,8 +604,8 @@
     <section class="section" id="contacto">
       <div class="container contact-grid">
         <div>
-          <div class="eyebrow">Contacto</div>
-          <a class="btn" href="https://wa.me/50492549176?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER." target="_blank" rel="noopener">Contáctanos</a>
+          <div class="eyebrow contact-eyebrow">Contacto</div>
+          <a class="btn contact-primary" href="https://wa.me/50492549176?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20ARTE%20CLUB%20TALLER." target="_blank" rel="noopener">Contáctanos</a>
           <div class="contact-social hidden" id="contactSocialLinks" aria-label="Redes sociales">
             <a id="contactFacebookLink" target="_blank" rel="noopener noreferrer" aria-label="ARTE CLUB Taller en Facebook">
               <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-9h3l.45-3.5H13.5V7.25c0-1.01.28-1.7 1.73-1.7H17V2.42c-.31-.04-1.37-.13-2.61-.13-2.58 0-4.35 1.58-4.35 4.48V9.5H7.12V13h2.92v9h3.46Z"/></svg>
