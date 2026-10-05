@@ -521,7 +521,7 @@
       <div class="container">
         <div class="eyebrow">Inscripción</div>
         <h2>Confirma tu jornada y completa el proceso.</h2>
-        <p class="lead">Puedes inscribirte directamente por WhatsApp o utilizar el formulario web. La inscripción queda confirmada únicamente después de validar el pago.</p>
+        <p class="lead">Completa tu inscripción directamente en este formulario. La inscripción queda confirmada únicamente después de validar el pago.</p>
         <div class="enroll-layout">
           <div class="panel">
             <h3>1. Confirma tu jornada</h3>
@@ -907,7 +907,7 @@ window.ARTECLUB_CONFIG = {
       setTimeout(closeModal,1500);
     } catch(err){
       status.className='status error';
-      status.textContent = err.message==='BACKEND_NOT_CONFIGURED' ? 'La recepción central todavía no está configurada. Por ahora puedes escribirnos directamente por WhatsApp.' : 'No fue posible guardar tus datos. Puedes escribirnos directamente por WhatsApp.';
+      status.textContent = err.message==='BACKEND_NOT_CONFIGURED' ? 'La recepción central todavía no está configurada. Intenta nuevamente más tarde.' : 'No fue posible guardar tus datos. Intenta nuevamente en unos minutos.';
     } finally { button.disabled=false; button.textContent='Guardar mi interés'; }
   });
 
@@ -956,7 +956,7 @@ window.ARTECLUB_CONFIG = {
       loadAvailability();
     } catch(err){
       status.className='status error';
-      status.textContent = err.message==='BACKEND_NOT_CONFIGURED' ? 'La recepción central todavía no está configurada. Puedes completar tu inscripción ahora mismo por WhatsApp.' : (err.message || 'No fue posible enviar la solicitud. Intenta de nuevo o inscríbete por WhatsApp.');
+      status.textContent = err.message==='BACKEND_NOT_CONFIGURED' ? 'La recepción central todavía no está configurada. Intenta nuevamente más tarde.' : (err.message || 'No fue posible enviar la solicitud. Intenta nuevamente en unos minutos.');
     } finally { button.disabled=false; button.textContent=(document.getElementById('intensive')?.dataset.full === '1') ? 'Unirme a la lista de espera' : 'Enviar solicitud de inscripción'; }
   });
 
